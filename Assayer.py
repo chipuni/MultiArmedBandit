@@ -1,13 +1,9 @@
 from abc import ABC, abstractmethod
 
 
-class Assayer(ABC):
+class Assayer:
     hits = 0
     attempts = 0
-
-    @abstractmethod
-    def choose(self) -> bool:
-        pass
 
     def train(self, hit):
         self.attempts += 1
