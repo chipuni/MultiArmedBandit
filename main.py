@@ -4,6 +4,7 @@ import sys
 from Assayer import Assayer
 from BetaBinomialMultiArmedBandit import BetaBinomialMultiArmedBandit
 from EpsilonGreedyMultiArmedBandit import EpsilonGreedyMultiArmedBandit
+from FixedExplorationMultiArmedBandit import FixedExplorationMultiArmedBandit
 from Generator import Generator
 from SimplestMultiArmedBandit import SimplestMultiArmedBandit
 from ThompsonMultiArmedBandit import ThompsonMultiArmedBandit
@@ -36,13 +37,13 @@ def main(strMAB):
                 smad1_hits = count_hits(smad1, NUM_ATTEMPTS)
                 final_choice = smad1.choose_side()
                 correct_choices.train(final_choice == 2)
-                display_results(smad1_hits, larger, larger_generator, smaller, smaller_generator, final_choice, 2)
+                # display_results(smad1_hits, larger, larger_generator, smaller, smaller_generator, final_choice, 2)
 
                 smad2 = multi_armed_bandit_factory(strMAB, larger_generator, smaller_generator)
                 smad2_hits = count_hits(smad2, NUM_ATTEMPTS)
                 final_choice = smad2.choose_side()
                 correct_choices.train(final_choice == 1)
-                display_results(smad2_hits, larger, larger_generator, smaller, smaller_generator, final_choice, 1)
+                # display_results(smad2_hits, larger, larger_generator, smaller, smaller_generator, final_choice, 1)
 
     print(f"Final correct choices: {correct_choices.get_hits()} / {correct_choices.get_attempts()}")
 
@@ -70,6 +71,8 @@ def multi_armed_bandit_factory(strMAB, firstGenerator, secondGenerator):
         return ThompsonMultiArmedBandit(firstGenerator, secondGenerator)
     elif strMAB == "Beta":
         return BetaBinomialMultiArmedBandit(firstGenerator, secondGenerator, 0.95)
+    elif strMAB == "Fixed":
+        return FixedExplorationMultiArmedBandit(firstGenerator, secondGenerator, 200)
     print(f"Unknown multi-armed bandit requested: {strMAB}")
     return None
 

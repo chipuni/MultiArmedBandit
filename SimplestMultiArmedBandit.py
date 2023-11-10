@@ -1,4 +1,3 @@
-from Generator import Generator
 from MultiArmedBandit import MultiArmedBandit
 
 

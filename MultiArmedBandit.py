@@ -38,3 +38,15 @@ class MultiArmedBandit(Assayer):
             else:
                 choice = 2
         return choice
+
+    def convert_min_to_choice(self, side1, side2):
+        if side1 > side2:
+            choice = 2
+        elif side1 < side2:
+            choice = 1
+        else:
+            if self.coin_flip.choose():
+                choice = 1
+            else:
+                choice = 2
+        return choice
