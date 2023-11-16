@@ -8,6 +8,7 @@ from FixedExplorationMultiArmedBandit import FixedExplorationMultiArmedBandit
 from Generator import Generator
 from SimplestMultiArmedBandit import SimplestMultiArmedBandit
 from ThompsonMultiArmedBandit import ThompsonMultiArmedBandit
+from UCBMultiArmedBandit import UCBMultiArmedBandit
 
 NUM_ATTEMPTS = 10000
 
@@ -40,6 +41,8 @@ def multi_armed_bandit_factory(str_mab, firstGenerator, secondGenerator, param):
         return BetaBinomialMultiArmedBandit(firstGenerator, secondGenerator, float(param))
     elif str_mab == "Fixed":
         return FixedExplorationMultiArmedBandit(firstGenerator, secondGenerator, int(param))
+    elif str_mab == "UCB":
+        return UCBMultiArmedBandit(firstGenerator, secondGenerator)
     print(f"Unknown multi-armed bandit requested: {str_mab}")
     return None
 
@@ -109,5 +112,7 @@ def main(str_mab, param):
 if __name__ == '__main__':
     if len(sys.argv) > 2:
         main(sys.argv[1], sys.argv[2])
-    else:
+    elif len(sys.argv) == 2:
         main(sys.argv[1], None)
+    else:
+        print("This program needs to know which multi-armed bandit to run.")
